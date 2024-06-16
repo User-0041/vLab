@@ -1,0 +1,31 @@
+{% extends 'baselab.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Select VM Type</h3>
+            </div>
+            <div class="card-body">
+                {% if vm_types %}
+                <form method="post" action="{% url 'create_vm_instance' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="vm_type">VM Type:</label>
+                        <select name="vm_type" id="vm_type" class="form-control" required>
+                            {% for vm_type in vm_types %}
+                            <option value="{{ vm_type.id }}">{{ vm_type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create VM Instance</button>
+                </form>
+                {% else %}
+                <p class="text-center">No VM types available. Please contact the administrator to create VM types.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
